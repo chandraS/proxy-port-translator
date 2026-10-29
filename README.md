@@ -7,7 +7,6 @@
   Services, ConfigMaps, …). Each directory has a `kustomization.yaml`.
 - `<namespace>/_secrets-redacted/` — Secret shapes with every value set to `REPLACE_ME`.
   Not referenced by any kustomization. Do not put real values in git (use SOPS / External Secrets).
-- `_provenance.tsv` — every object seen: exported or skipped (with reason) and its field managers.
 
 ## Rebuild order
 1. `helm/eg/install.sh` (Envoy Gateway controller + Gateway API CRDs)
