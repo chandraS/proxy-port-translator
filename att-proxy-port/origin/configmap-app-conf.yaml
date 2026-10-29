@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  app.conf: |-
+    server {listen 8080;location / {default_type text/plain;expires -1;return 200 'Server address: $server_addr:$server_port
+    Server name:$hostname
+    Date: $time_local
+    URI: $request_method:$request_uri
+    REQ Length:$request_length
+    Request ID: $request_id
+    ';}location /healthz {return 200 'I am happy and healthy :)';}}
+kind: ConfigMap
+metadata:
+  name: app-conf
+  namespace: origin

@@ -1,0 +1,18 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: waf-backend-cpr-prod
+  namespace: envoy-gateway-system
+spec:
+  endpoints:
+    - fqdn:
+        hostname: aka-cpr.att.com
+        port: 443
+  tls:
+    caCertificateRefs:
+      - group: ""
+        kind: Secret
+        name: cpr-att-com-ca-cert
+    insecureSkipVerify: false
+    sni: aka-cpr.att.com
+  type: Endpoints

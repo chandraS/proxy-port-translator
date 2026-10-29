@@ -1,0 +1,18 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: waf-backend-443
+  namespace: envoy-gateway-system
+spec:
+  endpoints:
+    - fqdn:
+        hostname: aka-tdseg-test.att.com
+        port: 443
+  tls:
+    caCertificateRefs:
+      - group: ""
+        kind: Secret
+        name: tdseg-upstream-ca-cert
+    insecureSkipVerify: false
+    sni: aka-tdseg-test.att.com
+  type: Endpoints

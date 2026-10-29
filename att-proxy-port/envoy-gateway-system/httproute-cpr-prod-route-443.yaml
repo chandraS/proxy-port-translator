@@ -1,0 +1,36 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: cpr-prod-route-443
+  namespace: envoy-gateway-system
+spec:
+  hostnames:
+    - cpr.att.com
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-gateway
+      sectionName: https-cpr-prod-443
+  rules:
+    - backendRefs:
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: waf-backend-cpr-prod
+          weight: 1
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            hostname: aka-cpr.att.com
+        - requestHeaderModifier:
+            set:
+              - name: incoming-port
+                value: "443"
+              - name: incoming-host
+                value: cpr.att.com
+              - name: client-ip
+                value: '%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%'
+          type: RequestHeaderModifier
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

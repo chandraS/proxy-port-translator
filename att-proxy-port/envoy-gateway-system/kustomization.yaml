@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - backend-waf-backend-443.yaml
+  - backend-waf-backend-apps-443.yaml
+  - backend-waf-backend-cpr-443.yaml
+  - backend-waf-backend-cpr-prod.yaml
+  - backend-waf-backend-tdseg-443.yaml
+  - configmap-aaph-lua-plugin-files.yaml
+  - envoypatchpolicy-aaph-lua-filter.yaml
+  - envoyproxy-daemonset-envoy-proxy.yaml
+  - gateway-envoy-gateway.yaml
+  - httproute-app-svc.yaml
+  - httproute-apps-external-route-8888.yaml
+  - httproute-cpr-external-route-443.yaml
+  - httproute-cpr-external-route-8443.yaml
+  - httproute-cpr-prod-route-443.yaml
+  - httproute-cpr-prod-route-8443.yaml
+  - httproute-juice-shop.yaml
+  - httproute-tdseg-external-route-8888.yaml

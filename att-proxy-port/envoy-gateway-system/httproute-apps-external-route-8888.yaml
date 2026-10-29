@@ -1,0 +1,38 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: apps-external-route-8888
+  namespace: envoy-gateway-system
+spec:
+  hostnames:
+    - apps.wholesale.att.com
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-gateway
+      sectionName: https-apps-8888
+  rules:
+    - backendRefs:
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: waf-backend-apps-443
+          weight: 1
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            hostname: aka-apps.wholesale.att.com
+        - requestHeaderModifier:
+            set:
+              - name: incoming-port
+                value: "8888"
+              - name: incoming-host
+                value: apps.wholesale.att.com
+              - name: client-ip
+                value: '%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%'
+          type: RequestHeaderModifier
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+      timeouts:
+        request: 30s

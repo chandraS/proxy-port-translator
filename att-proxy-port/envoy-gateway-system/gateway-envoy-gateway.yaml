@@ -1,0 +1,92 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-gateway
+  namespace: envoy-gateway-system
+spec:
+  gatewayClassName: envoy-gateway-class
+  listeners:
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      name: http
+      port: 80
+      protocol: HTTP
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      hostname: tdseg-test.att.com
+      name: https-tdseg-8888
+      port: 8888
+      protocol: HTTPS
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: tdseg-gateway-cert
+        mode: Terminate
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      hostname: cpr-test.att.com
+      name: https-cprtest-8443
+      port: 8443
+      protocol: HTTPS
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: tdseg-gateway-cert
+        mode: Terminate
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      hostname: cpr.att.com
+      name: https-cpr-prod-8443
+      port: 8443
+      protocol: HTTPS
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: tdseg-gateway-cert
+        mode: Terminate
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      hostname: cpr-test.att.com
+      name: https-cprtest-443
+      port: 443
+      protocol: HTTPS
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: tdseg-gateway-cert
+        mode: Terminate
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      hostname: cpr.att.com
+      name: https-cpr-prod-443
+      port: 443
+      protocol: HTTPS
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: tdseg-gateway-cert
+        mode: Terminate
+    - allowedRoutes:
+        namespaces:
+          from: Same
+      hostname: apps.wholesale.att.com
+      name: https-apps-8888
+      port: 8888
+      protocol: HTTPS
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: apps-wholesale-att-com-gateway-cert
+        mode: Terminate
