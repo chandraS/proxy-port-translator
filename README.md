@@ -1,8 +1,3 @@
-# att-proxy-port — cluster manifests
-
-Exported 2026-10-29T19:01Z from context `lke631133-ctx`
-by export-manifests.sh. Cluster-generated fields (status, uid, resourceVersion, managedFields,
-clusterIP, nodePort, last-applied annotations, controller finalizers) are stripped.
 
 ## Layout
 - `helm/<release>/` — Helm-managed components as chart + `values.yaml` + `install.sh`.
